@@ -6,6 +6,9 @@ export const giras = pgTable("giras", {
     .primaryKey()
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
+  responsibleId: text("responsible_id")
+    .references(() => sons.id)
+    .notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
