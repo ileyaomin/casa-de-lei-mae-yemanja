@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const giras = pgTable("giras", {
   id: text("id").primaryKey(),
@@ -31,6 +31,15 @@ export const frequencies = pgTable("frequencies", {
   assistanceId: text("assistance_id")
     .references(() => assistance.id)
     .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const suns = pgTable("suns", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  itAnswer: boolean("it_answer").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
