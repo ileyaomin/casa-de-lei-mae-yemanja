@@ -1,6 +1,6 @@
 import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-export const gira = pgTable("gira", {
+export const giras = pgTable("giras", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -23,10 +23,10 @@ export const assistance = pgTable("assistance", {
     .defaultNow(),
 });
 
-export const frequency = pgTable("frequency", {
+export const frequencies = pgTable("frequencies", {
   id: text("id").primaryKey(),
   giraId: text("gira_id")
-    .references(() => gira.id)
+    .references(() => giras.id)
     .notNull(),
   assistanceId: text("assistance_id")
     .references(() => assistance.id)
