@@ -60,3 +60,19 @@ export const passes = pgTable("passes", {
     .notNull()
     .defaultNow(),
 });
+
+export const queries = pgTable("queries", {
+  id: text("id").primaryKey(),
+  giraId: text("gira_id")
+    .references(() => giras.id)
+    .notNull(),
+  assistanceId: text("assistance_id")
+    .references(() => assistance.id)
+    .notNull(),
+  sonsId: text("sons_id")
+    .references(() => sons.id)
+    .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});

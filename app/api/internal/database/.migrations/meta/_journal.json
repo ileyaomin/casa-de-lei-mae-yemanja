@@ -50,6 +50,13 @@
       "when": 1729617607330,
       "tag": "0006_small_harpoon",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1729617834023,
+      "tag": "0007_neat_archangel",
+      "breakpoints": true
     }
   ]
 }
