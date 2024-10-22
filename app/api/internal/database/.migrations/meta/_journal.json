@@ -43,6 +43,13 @@
       "when": 1729563197248,
       "tag": "0005_nosy_trish_tilby",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1729617607330,
+      "tag": "0006_small_harpoon",
+      "breakpoints": true
     }
   ]
 }
