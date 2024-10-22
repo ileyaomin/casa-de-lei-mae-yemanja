@@ -36,7 +36,7 @@ export const frequencies = pgTable("frequencies", {
     .defaultNow(),
 });
 
-export const suns = pgTable("suns", {
+export const sons = pgTable("sons", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   itAnswer: boolean("it_answer").notNull().default(false),
