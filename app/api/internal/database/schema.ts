@@ -1,7 +1,10 @@
+import { createId } from "@paralleldrive/cuid2";
 import { boolean, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const giras = pgTable("giras", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
@@ -11,7 +14,9 @@ export const giras = pgTable("giras", {
 export const assistanceTypeEnum = pgEnum("type", ["default", "child", "old"]);
 
 export const assistance = pgTable("assistance", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name").notNull(),
   email: text("email").notNull(),
   address: text("address").notNull(),
@@ -24,7 +29,9 @@ export const assistance = pgTable("assistance", {
 });
 
 export const frequencies = pgTable("frequencies", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   giraId: text("gira_id")
     .references(() => giras.id)
     .notNull(),
@@ -37,7 +44,9 @@ export const frequencies = pgTable("frequencies", {
 });
 
 export const sons = pgTable("sons", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name").notNull(),
   itAnswer: boolean("it_answer").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -46,7 +55,9 @@ export const sons = pgTable("sons", {
 });
 
 export const passes = pgTable("passes", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   giraId: text("gira_id")
     .references(() => giras.id)
     .notNull(),
@@ -62,7 +73,9 @@ export const passes = pgTable("passes", {
 });
 
 export const queries = pgTable("queries", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   giraId: text("gira_id")
     .references(() => giras.id)
     .notNull(),
@@ -78,7 +91,9 @@ export const queries = pgTable("queries", {
 });
 
 export const donations = pgTable("donations", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
   giraId: text("gira_id")
     .references(() => giras.id)
     .notNull(),
