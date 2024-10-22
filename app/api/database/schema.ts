@@ -22,3 +22,16 @@ export const assistance = pgTable("assistance", {
     .notNull()
     .defaultNow(),
 });
+
+export const frequency = pgTable("frequency", {
+  id: text("id").primaryKey(),
+  giraId: text("gira_id")
+    .references(() => gira.id)
+    .notNull(),
+  assistanceId: text("assistance_id")
+    .references(() => assistance.id)
+    .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
