@@ -4,7 +4,7 @@ import { GirasService } from "../service/giras.service";
 export class GirasController {
   constructor(private readonly girasService: GirasService) {}
 
-  async Create(req: Request, res: Response) {
+  async Create(req: Request) {
     const body = await req.json();
 
     let data: CreateGirasRequest = body;
