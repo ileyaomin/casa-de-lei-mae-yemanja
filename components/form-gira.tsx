@@ -13,24 +13,29 @@ import { DialogClose } from "./ui/dialog";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Son } from "@/app/api/internal/entities/son.entity";
+import { CreateGirasRequest } from "@/app/api/internal/request/giras.request";
 
-const girasType = z.enum([
-  "Boiadeiro",
-  "Baianos",
-  "Erê",
-  "Marinheiro",
-  "Preto velho",
-  "Esquerda - Exu",
-  "Esquerda - Pomba Gira",
-], {
-	message: "Linha da gira é obrigatória"
-});
+const girasType = z.enum(
+  [
+    "Boiadeiro",
+    "Baianos",
+    "Erê",
+    "Marinheiro",
+    "Preto velho",
+    "Esquerda - Exu",
+    "Esquerda - Pomba Gira",
+  ],
+  {
+    message: "Linha da gira é obrigatória",
+  },
+);
 
 const fieldsFormSchema = z.object({
   name: girasType,
   responsible_id: z.string({
-		required_error: "Informe um filho responsável pela lista"
-	}),
+    required_error: "Informe um filho responsável pela lista",
+  }),
 });
 
 type FieldsFormSchema = z.infer<typeof fieldsFormSchema>;
@@ -40,12 +45,16 @@ export function FormGira() {
     resolver: zodResolver(fieldsFormSchema),
   });
 
-  async function getSons(): Promise<{ id: string; name: string }[]> {
+  async function getSons(): Promise<Son[]> {
     return await fetch("/api/sons").then((res) => res.json());
   }
 
   async function onSubmit(data: FieldsFormSchema) {
-    console.log(data);
+    const body: CreateGirasRequest = data;
+    await fetch("/api/giras", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
   }
 
   const sonsFetch = useQuery({
@@ -66,7 +75,7 @@ export function FormGira() {
 
               <SelectContent>
                 {sonsFetch.data?.map((son) => (
-                  <SelectItem key={son.id} value={son.id}>
+                  <SelectItem key={son.id} value={String(son.id)}>
                     {son.name}
                   </SelectItem>
                 ))}
@@ -103,13 +112,15 @@ export function FormGira() {
         }}
       />
       {formState.errors.name && (
-        <p className="text-red-400 text-sm">
-          {formState.errors.name.message}
-        </p>
+        <p className="text-red-400 text-sm">{formState.errors.name.message}</p>
       )}
 
       <div className="flex flex-1 flex-col gap-2 pt-4">
-        <Button type="submit" className="flex-1">
+        <Button
+          type="submit"
+          className="flex-1"
+          isLoading={formState.isSubmitting}
+        >
           Cadastrar
         </Button>
         <DialogClose asChild>
