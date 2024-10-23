@@ -12,7 +12,7 @@ config({
 
 const envSchema = z.object({
   NODE_ENV: environment,
-  POSTGRES_URL: z.string().url(),
+  POSTGRES_URL: z.string().url().optional(),
 });
 
 export const env = envSchema.parse(process.env);
