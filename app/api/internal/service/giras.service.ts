@@ -4,6 +4,11 @@ import { CreateGirasRequest } from "../request/giras.request";
 export class GirasService {
   constructor(private readonly girasRepository: GirasRepository) {}
 
+  async GetAll() {
+    const response = await this.girasRepository.GetAll();
+    return response;
+  }
+
   async Create(data: CreateGirasRequest) {
     const response = await this.girasRepository.Create({
       name: data.name,
