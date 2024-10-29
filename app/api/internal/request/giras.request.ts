@@ -13,3 +13,17 @@ export class CreateGirasRequest {
     Object.assign(this, props);
   }
 }
+
+export class AddAssistantToGiraRequest {
+  public giraId: string;
+  public assistantId: string;
+
+  constructor(props: AddAssistantToGiraRequest) {
+    z.object({
+      giraId: z.string(),
+      assistantId: z.string(),
+    }).parse(props);
+
+    Object.assign(this, props);
+  }
+}

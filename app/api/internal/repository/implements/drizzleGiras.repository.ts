@@ -1,8 +1,11 @@
 import { desc, eq } from "drizzle-orm";
 import { db } from "../../database";
-import { giras, sons } from "../../database/schema";
+import { frequencies, giras, sons } from "../../database/schema";
 import { Gira } from "../../entities/gira.entity";
-import { CreateGirasRequest } from "../../request/giras.request";
+import {
+  AddAssistantToGiraRequest,
+  CreateGirasRequest,
+} from "../../request/giras.request";
 import { GirasRepository } from "../giras.repository";
 import { GetAllGirasResponse } from "../../response/giras.response";
 
@@ -46,5 +49,14 @@ export class DrizzleGirasRepository implements GirasRepository {
     });
 
     return createdGira;
+  }
+
+  async AddAssistant(data: AddAssistantToGiraRequest): Promise<void> {
+    const dataInstance: typeof frequencies.$inferInsert = {
+      giraId: data.giraId,
+      assistanceId: data.assistantId,
+    };
+    await db.insert(frequencies).values(dataInstance);
+    return;
   }
 }

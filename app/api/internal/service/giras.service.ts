@@ -1,5 +1,8 @@
 import { GirasRepository } from "../repository/giras.repository";
-import { CreateGirasRequest } from "../request/giras.request";
+import {
+  AddAssistantToGiraRequest,
+  CreateGirasRequest,
+} from "../request/giras.request";
 
 export class GirasService {
   constructor(private readonly girasRepository: GirasRepository) {}
@@ -16,5 +19,10 @@ export class GirasService {
     });
 
     return response;
+  }
+
+  async AddAssistant(data: AddAssistantToGiraRequest) {
+    await this.girasRepository.AddAssistant(data);
+    return;
   }
 }

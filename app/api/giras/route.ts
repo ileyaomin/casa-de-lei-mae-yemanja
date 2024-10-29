@@ -7,3 +7,7 @@ export async function GET() {
 export async function POST(req: Request) {
   return await girasUseCase.Create(req);
 }
+
+export async function PUT(req: Request) {
+  return await girasUseCase.AddAssistant(req);
+}
