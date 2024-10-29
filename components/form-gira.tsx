@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Select,
   SelectContent,
@@ -15,11 +15,13 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Son } from "@/app/api/internal/entities/son.entity";
 import { CreateGirasRequest } from "@/app/api/internal/request/giras.request";
+import { useRef } from "react";
 
 const girasType = z.enum(
   [
     "Boiadeiro",
     "Baianos",
+    "Caboclos",
     "Erê",
     "Marinheiro",
     "Preto velho",
@@ -41,12 +43,23 @@ const fieldsFormSchema = z.object({
 type FieldsFormSchema = z.infer<typeof fieldsFormSchema>;
 
 export function FormGira() {
-  const { control, handleSubmit, formState } = useForm<FieldsFormSchema>({
-    resolver: zodResolver(fieldsFormSchema),
-  });
+  const queryClient = useQueryClient();
+
+  const closeButtonRef = useRef(null);
+
+  const { control, handleSubmit, formState, reset } = useForm<FieldsFormSchema>(
+    {
+      resolver: zodResolver(fieldsFormSchema),
+    },
+  );
 
   async function getSons(): Promise<Son[]> {
     return await fetch("/api/sons").then((res) => res.json());
+  }
+
+  function closeModal() {
+    const closeButton = closeButtonRef.current as HTMLButtonElement | null;
+    closeButton?.click();
   }
 
   async function onSubmit(data: FieldsFormSchema) {
@@ -54,6 +67,12 @@ export function FormGira() {
     await fetch("/api/giras", {
       method: "POST",
       body: JSON.stringify(body),
+    }).then(() => {
+      queryClient.invalidateQueries({
+        queryKey: ["get_all_giras"],
+      });
+      reset();
+      closeModal();
     });
   }
 
@@ -124,7 +143,12 @@ export function FormGira() {
           Cadastrar
         </Button>
         <DialogClose asChild>
-          <Button type="button" variant="ghost" className="flex-1">
+          <Button
+            type="button"
+            variant="ghost"
+            className="flex-1"
+            ref={closeButtonRef}
+          >
             Cancelar
           </Button>
         </DialogClose>

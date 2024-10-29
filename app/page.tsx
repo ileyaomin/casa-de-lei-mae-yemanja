@@ -1,4 +1,5 @@
 import { FormGira } from "@/components/form-gira";
+import { CardList } from "@/components/giras/card-list";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,12 +21,16 @@ export default function Home() {
             <Button>Cadastrar gira</Button>
           </DialogTrigger>
         </div>
+
+        <CardList />
       </div>
 
       <DialogContent className="top-[20%]">
         <DialogHeader>
           <DialogTitle>Nova gira</DialogTitle>
-					<DialogDescription>Selecione um filho de santo e a gira de hoje</DialogDescription>
+          <DialogDescription>
+            Selecione um filho de santo e a gira de hoje
+          </DialogDescription>
         </DialogHeader>
 
         <FormGira />
