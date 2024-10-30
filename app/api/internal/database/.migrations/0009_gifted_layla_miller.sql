@@ -1,0 +1,1 @@
+ALTER TABLE "assistance" ALTER COLUMN "type" SET NOT NULL;

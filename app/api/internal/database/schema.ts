@@ -24,7 +24,7 @@ export const assistance = pgTable("assistance", {
   email: text("email").notNull(),
   address: text("address").notNull(),
   reason: text("reason").notNull(),
-  type: assistanceTypeEnum().default("default"),
+  type: assistanceTypeEnum().default("default").notNull(),
   whoIndicated: text("who_indicated"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
